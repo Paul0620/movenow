@@ -126,3 +126,34 @@ MoveNow는 단순 기록 앱이 아닙니다.
 ## 📌 상태
 
 🚧 기획 및 초기 개발 단계
+
+---
+
+## 🤖 AI 개발 환경
+
+### 역할 분담
+
+| AI | 역할 | 프로젝트 지침 |
+|----|------|--------------|
+| [Claude Code](https://claude.ai/code) | 설계 · 계획 · 리뷰 | `CLAUDE.md` |
+| [Codex CLI](https://github.com/openai/codex) | 계획 기반 코드 구현 | `AGENTS.md` |
+
+### Claude 설정
+
+| 구분 | 설정 위치 | 내용 |
+|------|-----------|------|
+| 스킬 | `~/.claude/skills/` | `/superpower`, `/frontend-design`, `/planning-with-files` |
+| MCP | `~/.claude/mcp.json` | Context7 (라이브러리 최신 문서 참조) |
+
+### Codex 설정
+
+| 구분 | 설정 위치 | 내용 |
+|------|-----------|------|
+| 전역 설정 | `~/.codex/config.toml` | 모델(`gpt-5.4`), Context7 MCP |
+| 전역 지침 | `~/.codex/instructions.md` | 계획 범위 내 구현 원칙 |
+
+### 협업 흐름
+
+```
+Claude → /planning-with-files → AGENTS.md 업데이트 → Codex 구현
+```
