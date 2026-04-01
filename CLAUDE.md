@@ -1,24 +1,27 @@
 # MoveNow — Claude 작업 지침
 
-## 프로젝트 개요
-운동과 식단 기록을 기반으로 **다음 행동을 제안**하는 웹 애플리케이션.
-단순 기록이 아닌 "기록 → 분석 → 행동" 흐름을 핵심으로 한다.
+운동과 식단 기록 기반으로 **다음 행동을 제안**하는 웹 애플리케이션.
 
-## AI 역할 분담
-- **Claude** (이 파일): 설계, 계획, 아키텍처 결정, 코드 리뷰
-- **Codex** (`AGENTS.md`): 계획에 따른 코드 구현
+## 역할
+- **Claude**: 설계, 계획, 리뷰, 문서 관리
+- **Codex**: 코드 구현
 
-계획이 확정되면 `AGENTS.md`를 업데이트해서 Codex가 읽을 수 있게 한다.
+→ 상세 규칙: `docs/roles.md`
 
 ## 작업 흐름
-1. `/planning-with-files`로 구현 계획 수립
-2. 계획 확정 후 `AGENTS.md` 업데이트
-3. Codex가 `AGENTS.md` 기반으로 구현
-4. Claude가 결과물 리뷰
+1. `/planning-with-files` → 계획 수립
+2. `docs/plans/YYYY-MM-DD-title.md` 계획 파일 생성
+3. Codex 구현 (docs/plans/ 최신 파일 자동 탐색)
+4. Claude 리뷰
+
+## 문서
+| 파일 | 내용 |
+|------|------|
+| `docs/roles.md` | 역할 분담 상세 규칙 |
+| `docs/architecture.md` | 기술 스택, 페이지, 폴더 구조 |
+| `docs/database.md` | DB 스키마, 계산 공식 |
+| `docs/api.md` | 외부 API 가이드 |
+| `docs/conventions.md` | 네이밍, 그룹화 규칙 |
 
 ## 현재 상태
-- 🚧 기획 및 초기 개발 단계
-- 기술 스택 미확정
-
-## 현재 계획
-> 계획 수립 후 이 섹션을 업데이트할 것
+🚧 기획 완료 → Phase 1 셋업 대기
