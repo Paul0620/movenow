@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@supabase/ssr':
+        specifier: ^0.10.0
+        version: 0.10.0(@supabase/supabase-js@2.101.1)
       '@supabase/supabase-js':
         specifier: ^2.101.1
         version: 2.101.1
@@ -48,6 +51,9 @@ importers:
         specifier: ^4.3.6
         version: 4.3.6
     devDependencies:
+      '@eslint/eslintrc':
+        specifier: ^3.3.5
+        version: 3.3.5
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.2.2
@@ -60,15 +66,18 @@ importers:
       '@types/react-dom':
         specifier: ^19
         version: 19.2.3(@types/react@19.2.14)
-      '@types/recharts':
-        specifier: ^2.0.1
-        version: 2.0.1(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react-is@16.13.1)(react@19.2.4)(redux@5.0.1)
       eslint:
         specifier: ^9
         version: 9.39.4(jiti@2.6.1)
       eslint-config-next:
         specifier: 16.2.2
         version: 16.2.2(@typescript-eslint/parser@8.58.0(eslint@9.39.4(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.4(jiti@2.6.1))(typescript@5.9.3)
+      eslint-config-prettier:
+        specifier: ^10.1.8
+        version: 10.1.8(eslint@9.39.4(jiti@2.6.1))
+      prettier:
+        specifier: ^3.8.1
+        version: 3.8.1
       tailwindcss:
         specifier: ^4
         version: 4.2.2
@@ -1357,6 +1366,11 @@ packages:
     resolution: {integrity: sha512-Oa6dno0OB9I+hv5do5zsZHbFu41ViZnE9IWjmkeeF/8fPmB5fWoHGqeTYEC3/0DAgtpUoFJa4FpvzFH0SBHo1Q==}
     engines: {node: '>=20.0.0'}
 
+  '@supabase/ssr@0.10.0':
+    resolution: {integrity: sha512-36jIu+DuKzg5EgA3fnH+zHvwASvpKcL4zPgmHoZaULroS5Q4mzeHcM69zJ0sXUHddO5IcHjQNZJ9Vyhl/DdbRw==}
+    peerDependencies:
+      '@supabase/supabase-js': ^2.100.1
+
   '@supabase/storage-js@2.101.1':
     resolution: {integrity: sha512-WhTaUOBgeEvnKLy95Cdlp6+D5igSF/65yC727w1olxbet5nzUvMlajKUWyzNtQu2efrz2cQ7FcdVBdQqgT9YKQ==}
     engines: {node: '>=20.0.0'}
@@ -1512,10 +1526,6 @@ packages:
 
   '@types/react@19.2.14':
     resolution: {integrity: sha512-ilcTH/UniCkMdtexkoCN0bI7pMcJDvmQFPvuPvmEaYA/NSfFTAgdUSLAoVjaRJm7+6PvcM+q1zYOwS4wTYMF9w==}
-
-  '@types/recharts@2.0.1':
-    resolution: {integrity: sha512-/cFs7oiafzByUwBSWA1IzE6FW+ppPwQAWsDTadSgVOwzveY9MESpyLHyyHY0SfPPKLW4+4qVNYHPXd0rFiC8vg==}
-    deprecated: This is a stub types definition. recharts provides its own type definitions, so you do not need this installed.
 
   '@types/statuses@2.0.6':
     resolution: {integrity: sha512-xMAgYwceFhRA2zY+XbEA7mxYbA093wdiW8Vu6gZPGWy9cmOyU9XesH1tNcEWsKFd5Vzrqx5T3D38PWx1FIIXkA==}
@@ -2196,6 +2206,12 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
+
+  eslint-config-prettier@10.1.8:
+    resolution: {integrity: sha512-82GZUjRS0p/jganf6q1rEO25VSoHH0hKPCTrgillPjdI/3bgBhAE1QzHrHTizjpRvy6pGAvKjDJtk2pF9NDq8w==}
+    hasBin: true
+    peerDependencies:
+      eslint: '>=7.0.0'
 
   eslint-import-resolver-node@0.3.9:
     resolution: {integrity: sha512-WFj2isz22JahUv+B788TlO3N6zL3nNJGU8CcZbPZvVEkBPaJdCV4vy5wyghty5ROFbCRnm132v8BScu5/1BQ8g==}
@@ -3267,6 +3283,11 @@ packages:
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
+
+  prettier@3.8.1:
+    resolution: {integrity: sha512-UOnG6LftzbdaHZcKoPFtOcCKztrQ57WkHDeRD9t/PTQtmT0NHSeWWepj6pS0z/N7+08BHFDQVUrfmfMRcZwbMg==}
+    engines: {node: '>=14'}
+    hasBin: true
 
   pretty-ms@9.3.0:
     resolution: {integrity: sha512-gjVS5hOP+M3wMm5nmNOucbIrqudzs9v/57bWRHQWLYklXqoXKrVfYW2W9+glfGsqtPgpiz5WwyEEB+ksXIx3gQ==}
@@ -5261,6 +5282,11 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
+  '@supabase/ssr@0.10.0(@supabase/supabase-js@2.101.1)':
+    dependencies:
+      '@supabase/supabase-js': 2.101.1
+      cookie: 1.1.1
+
   '@supabase/storage-js@2.101.1':
     dependencies:
       iceberg-js: 0.8.1
@@ -5402,16 +5428,6 @@ snapshots:
   '@types/react@19.2.14':
     dependencies:
       csstype: 3.2.3
-
-  '@types/recharts@2.0.1(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react-is@16.13.1)(react@19.2.4)(redux@5.0.1)':
-    dependencies:
-      recharts: 3.8.1(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react-is@16.13.1)(react@19.2.4)(redux@5.0.1)
-    transitivePeerDependencies:
-      - '@types/react'
-      - react
-      - react-dom
-      - react-is
-      - redux
 
   '@types/statuses@2.0.6': {}
 
@@ -6126,6 +6142,10 @@ snapshots:
       - eslint-import-resolver-webpack
       - eslint-plugin-import-x
       - supports-color
+
+  eslint-config-prettier@10.1.8(eslint@9.39.4(jiti@2.6.1)):
+    dependencies:
+      eslint: 9.39.4(jiti@2.6.1)
 
   eslint-import-resolver-node@0.3.9:
     dependencies:
@@ -7240,6 +7260,8 @@ snapshots:
   powershell-utils@0.1.0: {}
 
   prelude-ls@1.2.1: {}
+
+  prettier@3.8.1: {}
 
   pretty-ms@9.3.0:
     dependencies:

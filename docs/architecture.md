@@ -2,15 +2,15 @@
 
 ## 기술 스택
 
-| 분류 | 기술 |
-|------|------|
-| Package Manager | pnpm |
-| Framework | Next.js (App Router) + TypeScript |
-| Styling | Tailwind CSS + shadcn/ui |
-| Validation | Zod |
-| Chart | Recharts |
-| Server | Next.js Server Actions |
-| Database | Supabase (PostgreSQL) |
+| 분류            | 기술                                  |
+| --------------- | ------------------------------------- |
+| Package Manager | pnpm                                  |
+| Framework       | Next.js (App Router) + TypeScript     |
+| Styling         | Tailwind CSS + shadcn/ui              |
+| Validation      | Zod                                   |
+| Chart           | Recharts                              |
+| Server          | Next.js Server Actions                |
+| Database        | Supabase (PostgreSQL) + @supabase/ssr |
 
 ---
 
@@ -30,13 +30,13 @@
 
 ## 페이지 구성
 
-| 페이지 | 경로 | 역할 |
-|--------|------|------|
-| Dashboard | `/` | 오늘 요약 + 우선순위 행동 제안 1~2개 |
-| Workout | `/workout` | 운동 기록 목록 + 추가 |
-| Diet | `/diet` | 식단 기록 목록 + 추가 |
-| Profile | `/profile` | 신체 정보 입력 / 수정 |
-| Analysis | `/analysis` | 주간 / 월간 차트 분석 |
+| 페이지    | 경로        | 역할                                 |
+| --------- | ----------- | ------------------------------------ |
+| Dashboard | `/`         | 오늘 요약 + 우선순위 행동 제안 1~2개 |
+| Workout   | `/workout`  | 운동 기록 목록 + 추가                |
+| Diet      | `/diet`     | 식단 기록 목록 + 추가                |
+| Profile   | `/profile`  | 신체 정보 입력 / 수정                |
+| Analysis  | `/analysis` | 주간 / 월간 차트 분석                |
 
 ---
 

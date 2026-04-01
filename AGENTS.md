@@ -5,23 +5,37 @@
 ============================================================ -->
 
 ## 역할 및 규칙
+
 → `docs/roles.md` 필수 숙지
 
 **핵심 원칙**
+
 - 계획 범위 내 코드만 구현한다
 - 범위 외 요청 → "계획에 없는 내용입니다. Claude에게 계획 수립을 요청하세요"
 - 기술 스택 코드 작성 전 반드시 `use context7`으로 최신 공식 문서 확인 (`docs/conventions.md` 참조)
+- `git commit`, `git push`는 사용자가 명시적으로 요청할 때만 실행한다
+
+**작업 완료 시 반드시 아래 메시지를 출력한다**
+
+```
+✅ Phase N — [제목] 완료
+
+👉 Claude에게 아래 메시지를 복사해서 전달하세요:
+Phase N 리뷰해줘
+```
 
 ## 참조 문서
-| 문서 | 확인 시점 |
-|------|----------|
-| `docs/roles.md` | 매 작업 시작 전 |
-| `docs/architecture.md` | 매 작업 시작 전 |
-| `docs/database.md` | DB 작업 시 |
-| `docs/api.md` | 외부 API 연동 시 |
-| `docs/conventions.md` | 파일 생성 / 네이밍 시 |
+
+| 문서                   | 확인 시점             |
+| ---------------------- | --------------------- |
+| `docs/roles.md`        | 매 작업 시작 전       |
+| `docs/architecture.md` | 매 작업 시작 전       |
+| `docs/database.md`     | DB 작업 시            |
+| `docs/api.md`          | 외부 API 연동 시      |
+| `docs/conventions.md`  | 파일 생성 / 네이밍 시 |
 
 ## 기술 스택
+
 Next.js (App Router) + TypeScript / Tailwind CSS + shadcn/ui / Zod / Recharts / Supabase
 
 ## 현재 계획 확인 방법
@@ -36,8 +50,8 @@ Next.js (App Router) + TypeScript / Tailwind CSS + shadcn/ui / Zod / Recharts / 
 
 ### 상태값 정의
 
-| 상태 | 의미 |
-|------|------|
+| 상태      | 의미                              |
+| --------- | --------------------------------- |
 | `대기 중` | Claude가 작성 완료, Codex 실행 전 |
-| `진행 중` | Codex 작업 중 |
-| `완료` | 구현 완료 |
+| `진행 중` | Codex 작업 중                     |
+| `완료`    | 구현 완료                         |

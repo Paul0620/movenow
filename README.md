@@ -26,14 +26,14 @@ MoveNow는 운동과 식단을 단순히 기록하는 것을 넘어,
 
 ## 기술 스택
 
-| 분류 | 기술 |
-|------|------|
-| Framework | Next.js (App Router) + TypeScript |
-| Styling | Tailwind CSS + shadcn/ui |
-| Validation | Zod |
-| Chart | Recharts |
-| Server | Next.js Server Actions |
-| Database | Supabase (PostgreSQL) |
+| 분류       | 기술                              |
+| ---------- | --------------------------------- |
+| Framework  | Next.js (App Router) + TypeScript |
+| Styling    | Tailwind CSS + shadcn/ui          |
+| Validation | Zod                               |
+| Chart      | Recharts                          |
+| Server     | Next.js Server Actions            |
+| Database   | Supabase (PostgreSQL)             |
 
 외부 API: Open Food Facts, wger API, USDA FoodData Central (모두 무료)
 
@@ -41,26 +41,26 @@ MoveNow는 운동과 식단을 단순히 기록하는 것을 넘어,
 
 ## 구현 계획
 
-| Phase | 내용 |
-|-------|------|
-| 1 | 프로젝트 셋업 |
-| 2 | DB 스키마 & Supabase 연결 |
-| 3 | Profile 페이지 |
-| 4 | Workout 기록 CRUD |
-| 5 | Diet 기록 CRUD |
-| 6 | Dashboard + 행동 제안 |
-| 7 | Analysis 차트 |
+| Phase | 내용                      |
+| ----- | ------------------------- |
+| 1     | 프로젝트 셋업             |
+| 2     | DB 스키마 & Supabase 연결 |
+| 3     | Profile 페이지            |
+| 4     | Workout 기록 CRUD         |
+| 5     | Diet 기록 CRUD            |
+| 6     | Dashboard + 행동 제안     |
+| 7     | Analysis 차트             |
 
 ---
 
 ## 문서
 
-| 문서 | 내용 |
-|------|------|
+| 문서                                    | 내용                                           |
+| --------------------------------------- | ---------------------------------------------- |
 | [architecture.md](docs/architecture.md) | 기술 스택, 페이지 구성, 폴더 구조, 데이터 흐름 |
-| [database.md](docs/database.md) | DB 스키마, 계산 공식 |
-| [api.md](docs/api.md) | 외부 API 사용 가이드 |
-| [conventions.md](docs/conventions.md) | 네이밍, 그룹화 규칙 |
+| [database.md](docs/database.md)         | DB 스키마, 계산 공식                           |
+| [api.md](docs/api.md)                   | 외부 API 사용 가이드                           |
+| [conventions.md](docs/conventions.md)   | 네이밍, 그룹화 규칙                            |
 
 ---
 
