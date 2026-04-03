@@ -4,16 +4,29 @@ import { createClient } from '@/lib/supabase/server'
 import type { WorkoutLog } from '@/types'
 
 type WorkoutLogInput = Omit<WorkoutLog, 'id' | 'created_at'>
+type GetWorkoutLogsOptions = {
+  date?: string
+  from?: string
+  to?: string
+}
 
 /** 날짜별 운동 기록 조회 */
 export async function getWorkoutLogs(
-  date?: string,
+  options?: GetWorkoutLogsOptions,
 ): Promise<{ data: WorkoutLog[]; error: string | null }> {
   const supabase = await createClient()
   let query = supabase.from('workout_logs').select('*').order('created_at', { ascending: false })
 
-  if (date) {
-    query = query.eq('date', date)
+  if (options?.date) {
+    query = query.eq('date', options.date)
+  }
+
+  if (options?.from) {
+    query = query.gte('date', options.from)
+  }
+
+  if (options?.to) {
+    query = query.lte('date', options.to)
   }
 
   const { data, error } = await query

@@ -33,6 +33,9 @@ Prettier + ESLint 병행 사용. 충돌 방지를 위해 `eslint-config-prettier
 
 기술 스택 관련 코드를 작성하기 전에 반드시 `use context7`으로 최신 공식 문서를 확인한다.
 
+- **베타(beta / rc / canary / alpha) 버전은 사용하지 않는다** — 최신 안정(stable) 버전 기준
+- API, 패턴, import 경로가 바뀌었으면 최신 방식을 따른다
+
 | 대상                                 | 확인 시점                    |
 | ------------------------------------ | ---------------------------- |
 | Next.js (App Router, Server Actions) | 페이지 / 서버 로직 작성 전   |
@@ -139,6 +142,8 @@ docs/
 
 ## 주의사항
 
+- `use context7`으로 최신 stable 문서 확인 후 작성 (beta / rc 제외)
+- `/code-quality` 규칙 준수 — any 타입, 타입 단언 남용, 우회 코드, 더티 로직 금지
 - 작업 전 알아야 할 내용
 
 ---
