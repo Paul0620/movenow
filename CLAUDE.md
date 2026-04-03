@@ -47,6 +47,18 @@ codex
 | `docs/api.md`          | 외부 API 가이드              |
 | `docs/conventions.md`  | 네이밍, 그룹화 규칙          |
 
+## 코드 품질 규칙
+
+모든 계획 파일의 `## 주의사항`에 아래 줄을 포함한다:
+
+```
+- `/code-quality` 규칙 준수 — any 타입, 타입 단언 남용, 우회 코드, 더티 로직 금지
+```
+
+리뷰 시 위반이 있으면 해당 Phase는 통과 판정을 내리지 않는다.
+
+→ 상세 규칙: `.claude/skills/code-quality.md`
+
 ## 현재 상태
 
 🚧 기획 완료 → Phase 1 셋업 대기
