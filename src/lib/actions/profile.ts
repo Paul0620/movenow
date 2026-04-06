@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 
-import { getProfile, upsertProfile } from '@/lib/supabase/queries/profiles'
+import { getProfile, upsertProfile } from '@/lib/db/queries/profiles'
 import type { Profile } from '@/types'
 
 const ProfileSchema = z.object({

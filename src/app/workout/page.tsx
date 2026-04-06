@@ -1,7 +1,7 @@
 import { WorkoutForm } from '@/components/workout/WorkoutForm'
 import { WorkoutList } from '@/components/workout/WorkoutList'
-import { getProfile } from '@/lib/supabase/queries/profiles'
-import { getWorkoutLogs } from '@/lib/supabase/queries/workout'
+import { getProfile } from '@/lib/db/queries/profiles'
+import { getWorkoutLogs } from '@/lib/db/queries/workout'
 
 function getToday() {
   const formatter = new Intl.DateTimeFormat('en-CA', {

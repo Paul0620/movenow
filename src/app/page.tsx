@@ -3,9 +3,9 @@ import { SuggestionCard } from '@/components/dashboard/SuggestionCard'
 import { TodaySummary } from '@/components/dashboard/TodaySummary'
 import { calcProteinGoal, calcTDEE, calcWorkoutGoalMinutes } from '@/lib/calculations'
 import { calcSuggestions } from '@/lib/calculations/suggestions'
-import { getDietLogs } from '@/lib/supabase/queries/diet'
-import { getProfile } from '@/lib/supabase/queries/profiles'
-import { getWorkoutLogs } from '@/lib/supabase/queries/workout'
+import { getDietLogs } from '@/lib/db/queries/diet'
+import { getProfile } from '@/lib/db/queries/profiles'
+import { getWorkoutLogs } from '@/lib/db/queries/workout'
 
 function formatSeoulDate(date: Date) {
   return new Intl.DateTimeFormat('en-CA', {

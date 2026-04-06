@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 
-import { createDietLog, deleteDietLog } from '@/lib/supabase/queries/diet'
+import { createDietLog, deleteDietLog } from '@/lib/db/queries/diet'
 
 const optionalAmount = z.preprocess((value) => {
   if (value === '' || value === null) return undefined
@@ -87,6 +87,7 @@ export async function createDietAction(
     protein_g: roundMacro(parsed.data.protein_g * ratio),
     carbs_g: roundMacro(parsed.data.carbs_g * ratio),
     fat_g: roundMacro(parsed.data.fat_g * ratio),
+    amount_g: parsed.data.amount_g ?? null,
   })
 
   if (result.error) {

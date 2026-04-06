@@ -1,6 +1,6 @@
 import { DietForm } from '@/components/diet/DietForm'
 import { DietList } from '@/components/diet/DietList'
-import { getDietLogs } from '@/lib/supabase/queries/diet'
+import { getDietLogs } from '@/lib/db/queries/diet'
 
 function getToday() {
   const formatter = new Intl.DateTimeFormat('en-CA', {

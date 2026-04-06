@@ -4,8 +4,8 @@ import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 
 import { calcCaloriesBurned } from '@/lib/calculations'
-import { getProfile } from '@/lib/supabase/queries/profiles'
-import { createWorkoutLog, deleteWorkoutLog } from '@/lib/supabase/queries/workout'
+import { getProfile } from '@/lib/db/queries/profiles'
+import { createWorkoutLog, deleteWorkoutLog } from '@/lib/db/queries/workout'
 
 const optionalInt = z.preprocess((value) => {
   if (value === '' || value === null) return undefined
@@ -119,6 +119,10 @@ export async function createWorkoutAction(
   const result = await createWorkoutLog({
     ...parsed.data,
     calories_burned: caloriesBurned,
+    sets: parsed.data.sets ?? null,
+    reps: parsed.data.reps ?? null,
+    weight_kg: parsed.data.weight_kg ?? null,
+    notes: parsed.data.notes ?? null,
   })
 
   if (result.error) {

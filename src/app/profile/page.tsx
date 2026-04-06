@@ -1,5 +1,5 @@
 import { ProfileForm } from '@/components/profile/ProfileForm'
-import { getProfile } from '@/lib/supabase/queries/profiles'
+import { getProfile } from '@/lib/db/queries/profiles'
 
 export default async function ProfilePage() {
   const { data: profile, error } = await getProfile()

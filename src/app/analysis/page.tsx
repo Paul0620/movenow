@@ -12,9 +12,9 @@ import {
   type DailyDietSummary,
   type DailyWorkoutSummary,
 } from '@/lib/calculations/analysis'
-import { getDietLogs } from '@/lib/supabase/queries/diet'
-import { getProfile } from '@/lib/supabase/queries/profiles'
-import { getWorkoutLogs } from '@/lib/supabase/queries/workout'
+import { getDietLogs } from '@/lib/db/queries/diet'
+import { getProfile } from '@/lib/db/queries/profiles'
+import { getWorkoutLogs } from '@/lib/db/queries/workout'
 
 type Props = {
   searchParams: Promise<{ period?: string }>
