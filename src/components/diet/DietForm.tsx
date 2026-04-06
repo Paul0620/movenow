@@ -1,7 +1,8 @@
 'use client'
 
-import { useActionState, useState, useTransition } from 'react'
+import { useActionState, useState } from 'react'
 
+import { FoodSearch } from '@/components/diet/FoodSearch'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -15,8 +16,6 @@ import {
 } from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
 import { createDietAction, type CreateDietState } from '@/lib/actions/diet'
-import { searchFoodsAction } from '@/lib/actions/openfoodfacts'
-import type { FoodItem } from '@/lib/openfoodfacts'
 
 type DietFormProps = {
   defaultDate: string
@@ -42,21 +41,19 @@ function formatMacro(value: number) {
 
 export function DietForm({ defaultDate }: DietFormProps) {
   const [state, formAction, pending] = useActionState(createDietAction, initialState)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [results, setResults] = useState<FoodItem[]>([])
-  const [searchError, setSearchError] = useState<string | null>(null)
-  const [foodName, setFoodName] = useState('')
-  const [calories, setCalories] = useState('')
-  const [protein, setProtein] = useState('')
-  const [carbs, setCarbs] = useState('')
-  const [fat, setFat] = useState('')
+  const [fields, setFields] = useState({
+    food_name: '',
+    calories: '',
+    protein_g: '',
+    carbs_g: '',
+    fat_g: '',
+  })
   const [amount, setAmount] = useState('')
-  const [isSearching, startSearchTransition] = useTransition()
 
-  const parsedCalories = Number(calories)
-  const parsedProtein = Number(protein)
-  const parsedCarbs = Number(carbs)
-  const parsedFat = Number(fat)
+  const parsedCalories = Number(fields.calories)
+  const parsedProtein = Number(fields.protein_g)
+  const parsedCarbs = Number(fields.carbs_g)
+  const parsedFat = Number(fields.fat_g)
   const parsedAmount = Number(amount)
 
   const preview =
@@ -74,30 +71,11 @@ export function DietForm({ defaultDate }: DietFormProps) {
         }
       : null
 
-  const handleSearch = () => {
-    const term = searchTerm.trim()
-
-    if (!term) {
-      setResults([])
-      setSearchError('검색어를 입력해주세요.')
-      return
-    }
-
-    startSearchTransition(async () => {
-      const foods = await searchFoodsAction(term)
-      setResults(foods)
-      setSearchError(foods.length === 0 ? '검색 결과가 없습니다. 직접 입력해도 됩니다.' : null)
-    })
-  }
-
-  const handleSelectFood = (food: FoodItem) => {
-    setFoodName(food.name)
-    setSearchTerm(food.name)
-    setCalories(String(food.calories_per_100g))
-    setProtein(String(food.protein_per_100g))
-    setCarbs(String(food.carbs_per_100g))
-    setFat(String(food.fat_per_100g))
-    setSearchError(null)
+  const handleFieldChange = (key: keyof typeof fields, value: string) => {
+    setFields((current) => ({
+      ...current,
+      [key]: value,
+    }))
   }
 
   return (
@@ -109,49 +87,32 @@ export function DietForm({ defaultDate }: DietFormProps) {
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-5">
-        <div className="grid gap-3">
-          <div className="grid gap-2">
-            <Label htmlFor="food-search">음식 검색</Label>
-            <div className="flex gap-2">
-              <Input
-                id="food-search"
-                value={searchTerm}
-                onChange={(event) => setSearchTerm(event.target.value)}
-                placeholder="예: yogurt, chicken breast, granola"
-              />
-              <Button type="button" variant="outline" onClick={handleSearch} disabled={isSearching}>
-                {isSearching ? '검색 중...' : '검색'}
-              </Button>
-            </div>
-            {searchError ? <p className="text-sm text-muted-foreground">{searchError}</p> : null}
-          </div>
-
-          {results.length > 0 ? (
-            <div className="grid gap-2 rounded-lg border border-border bg-muted/20 p-3">
-              <p className="text-sm font-medium">검색 결과</p>
-              <div className="grid gap-2">
-                {results.map((food) => (
-                  <button
-                    key={food.id}
-                    type="button"
-                    onClick={() => handleSelectFood(food)}
-                    className="rounded-md border border-border bg-background px-3 py-2 text-left text-sm transition-colors hover:bg-muted"
-                  >
-                    <span className="block font-medium">{food.name}</span>
-                    <span className="text-xs text-muted-foreground">
-                      100g 기준 · {food.calories_per_100g} kcal · P {food.protein_per_100g}g · C{' '}
-                      {food.carbs_per_100g}g · F {food.fat_per_100g}g
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          ) : null}
+        <div className="grid gap-2">
+          <Label htmlFor="food_name">음식 검색</Label>
+          <FoodSearch
+            defaultValue={fields.food_name}
+            onValueChange={(value) => handleFieldChange('food_name', value)}
+            onSelect={(food) =>
+              setFields({
+                food_name: food.name,
+                calories: String(food.calories),
+                protein_g: String(food.proteinG),
+                carbs_g: String(food.carbsG),
+                fat_g: String(food.fatG),
+              })
+            }
+          />
+          <p className="text-sm text-muted-foreground">
+            검색 결과를 선택하거나 음식명을 직접 입력할 수 있습니다.
+          </p>
+          <FieldError message={state.errors.food_name} />
         </div>
 
         <Separator />
 
         <form action={formAction} className="grid gap-5">
+          <input type="hidden" name="food_name" value={fields.food_name} />
+
           <div className="grid gap-2">
             <Label htmlFor="date">날짜</Label>
             <Input
@@ -185,16 +146,16 @@ export function DietForm({ defaultDate }: DietFormProps) {
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="food_name">음식명</Label>
+            <Label htmlFor="food_name_manual">음식명</Label>
             <Input
-              id="food_name"
-              name="food_name"
-              value={foodName}
-              onChange={(event) => setFoodName(event.target.value)}
-              placeholder="음식명을 직접 입력할 수 있습니다"
-              aria-invalid={Boolean(state.errors.food_name)}
+              id="food_name_manual"
+              value={fields.food_name}
+              onChange={(event) => handleFieldChange('food_name', event.target.value)}
+              placeholder="검색 없이 직접 입력할 수도 있습니다"
             />
-            <FieldError message={state.errors.food_name} />
+            <p className="text-sm text-muted-foreground">
+              검색 입력창과 연동됩니다. 편한 쪽에서 수정하면 됩니다.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -206,8 +167,8 @@ export function DietForm({ defaultDate }: DietFormProps) {
                 type="number"
                 min="0"
                 max="5000"
-                value={calories}
-                onChange={(event) => setCalories(event.target.value)}
+                value={fields.calories}
+                onChange={(event) => handleFieldChange('calories', event.target.value)}
                 aria-invalid={Boolean(state.errors.calories)}
               />
               <FieldError message={state.errors.calories} />
@@ -239,8 +200,8 @@ export function DietForm({ defaultDate }: DietFormProps) {
                 min="0"
                 max="500"
                 step="0.1"
-                value={protein}
-                onChange={(event) => setProtein(event.target.value)}
+                value={fields.protein_g}
+                onChange={(event) => handleFieldChange('protein_g', event.target.value)}
                 aria-invalid={Boolean(state.errors.protein_g)}
               />
               <FieldError message={state.errors.protein_g} />
@@ -254,8 +215,8 @@ export function DietForm({ defaultDate }: DietFormProps) {
                 min="0"
                 max="500"
                 step="0.1"
-                value={carbs}
-                onChange={(event) => setCarbs(event.target.value)}
+                value={fields.carbs_g}
+                onChange={(event) => handleFieldChange('carbs_g', event.target.value)}
                 aria-invalid={Boolean(state.errors.carbs_g)}
               />
               <FieldError message={state.errors.carbs_g} />
@@ -269,8 +230,8 @@ export function DietForm({ defaultDate }: DietFormProps) {
                 min="0"
                 max="500"
                 step="0.1"
-                value={fat}
-                onChange={(event) => setFat(event.target.value)}
+                value={fields.fat_g}
+                onChange={(event) => handleFieldChange('fat_g', event.target.value)}
                 aria-invalid={Boolean(state.errors.fat_g)}
               />
               <FieldError message={state.errors.fat_g} />

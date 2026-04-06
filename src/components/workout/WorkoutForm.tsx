@@ -1,10 +1,8 @@
 'use client'
 
-import { useActionState, useState, useTransition } from 'react'
+import { useActionState, useState } from 'react'
 
-import { createWorkoutAction, type CreateWorkoutState } from '@/lib/actions/workout'
-import { getExerciseMetAction, searchExercisesAction } from '@/lib/actions/wger'
-import type { WgerExercise } from '@/lib/wger'
+import { ExerciseSearch } from '@/components/workout/ExerciseSearch'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -17,6 +15,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
+import { createWorkoutAction, type CreateWorkoutState } from '@/lib/actions/workout'
 
 type WorkoutFormProps = {
   defaultDate: string
@@ -39,40 +38,8 @@ function FieldError({ message }: { message?: string }) {
 
 export function WorkoutForm({ defaultDate, hasProfile }: WorkoutFormProps) {
   const [state, formAction, pending] = useActionState(createWorkoutAction, initialState)
-  const [searchTerm, setSearchTerm] = useState('')
   const [exerciseName, setExerciseName] = useState('')
   const [metValue, setMetValue] = useState('')
-  const [results, setResults] = useState<WgerExercise[]>([])
-  const [searchError, setSearchError] = useState<string | null>(null)
-  const [isSearching, startSearchTransition] = useTransition()
-  const [isMetLoading, startMetTransition] = useTransition()
-
-  const handleSearch = () => {
-    const term = searchTerm.trim()
-
-    if (!term) {
-      setResults([])
-      setSearchError('검색어를 입력해주세요.')
-      return
-    }
-
-    startSearchTransition(async () => {
-      const exercises = await searchExercisesAction(term)
-      setResults(exercises)
-      setSearchError(exercises.length === 0 ? '검색 결과가 없습니다. 직접 입력해도 됩니다.' : null)
-    })
-  }
-
-  const handleSelectExercise = (exercise: WgerExercise) => {
-    setExerciseName(exercise.name)
-    setSearchTerm(exercise.name)
-
-    startMetTransition(async () => {
-      const met = await getExerciseMetAction(exercise.id)
-      setMetValue(met ? String(met) : '')
-      setSearchError(met ? null : 'MET 값을 찾지 못했습니다. 직접 입력해주세요.')
-    })
-  }
 
   return (
     <Card>
@@ -89,46 +56,27 @@ export function WorkoutForm({ defaultDate, hasProfile }: WorkoutFormProps) {
           </div>
         ) : null}
 
-        <div className="grid gap-3">
-          <div className="grid gap-2">
-            <Label htmlFor="exercise-search">운동 검색</Label>
-            <div className="flex gap-2">
-              <Input
-                id="exercise-search"
-                value={searchTerm}
-                onChange={(event) => setSearchTerm(event.target.value)}
-                placeholder="예: squat, running, swimming"
-              />
-              <Button type="button" variant="outline" onClick={handleSearch} disabled={isSearching}>
-                {isSearching ? '검색 중...' : '검색'}
-              </Button>
-            </div>
-            {searchError ? <p className="text-sm text-muted-foreground">{searchError}</p> : null}
-          </div>
-
-          {results.length > 0 ? (
-            <div className="grid gap-2 rounded-lg border border-border bg-muted/20 p-3">
-              <p className="text-sm font-medium">검색 결과</p>
-              <div className="grid gap-2">
-                {results.map((exercise) => (
-                  <button
-                    key={exercise.id}
-                    type="button"
-                    onClick={() => handleSelectExercise(exercise)}
-                    className="rounded-md border border-border bg-background px-3 py-2 text-left text-sm transition-colors hover:bg-muted"
-                  >
-                    <span className="block font-medium">{exercise.name}</span>
-                    <span className="text-xs text-muted-foreground">{exercise.category}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          ) : null}
+        <div className="grid gap-2">
+          <Label htmlFor="exercise_name">운동 검색</Label>
+          <ExerciseSearch
+            defaultValue={exerciseName}
+            onValueChange={setExerciseName}
+            onSelect={(exercise) => {
+              setExerciseName(exercise.name)
+              setMetValue(String(exercise.metValue))
+            }}
+          />
+          <p className="text-sm text-muted-foreground">
+            검색 결과를 선택하면 운동명과 MET가 자동 입력되며, 이후에도 직접 수정할 수 있습니다.
+          </p>
+          <FieldError message={state.errors.exercise_name} />
         </div>
 
         <Separator />
 
         <form action={formAction} className="grid gap-5">
+          <input type="hidden" name="exercise_name" value={exerciseName} />
+
           <div className="grid gap-2">
             <Label htmlFor="date">날짜</Label>
             <Input
@@ -142,16 +90,16 @@ export function WorkoutForm({ defaultDate, hasProfile }: WorkoutFormProps) {
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="exercise_name">운동명</Label>
+            <Label htmlFor="exercise_name_manual">운동명</Label>
             <Input
-              id="exercise_name"
-              name="exercise_name"
+              id="exercise_name_manual"
               value={exerciseName}
               onChange={(event) => setExerciseName(event.target.value)}
-              placeholder="운동명을 직접 입력할 수 있습니다"
-              aria-invalid={Boolean(state.errors.exercise_name)}
+              placeholder="검색 없이 직접 입력할 수도 있습니다"
             />
-            <FieldError message={state.errors.exercise_name} />
+            <p className="text-sm text-muted-foreground">
+              검색 입력창과 같은 값을 사용합니다.
+            </p>
           </div>
 
           <div className="grid gap-2">
@@ -198,7 +146,7 @@ export function WorkoutForm({ defaultDate, hasProfile }: WorkoutFormProps) {
               step="0.1"
               value={metValue}
               onChange={(event) => setMetValue(event.target.value)}
-              placeholder={isMetLoading ? '불러오는 중...' : '직접 입력 가능'}
+              placeholder="직접 입력 가능"
               aria-invalid={Boolean(state.errors.met_value)}
             />
             <FieldError message={state.errors.met_value} />
