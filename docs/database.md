@@ -6,6 +6,30 @@ Supabase (PostgreSQL) — 인증 없음, 개인 사용 전용
 
 ---
 
+## ORM / 스키마 관리
+
+**Drizzle ORM** 사용 (Phase 9 전환).
+
+| 항목 | 내용 |
+| ---- | ---- |
+| 스키마 정의 | `src/lib/db/schema.ts` — 단일 진실 공급원 |
+| DB 반영 | `pnpm db:push` (drizzle-kit push) |
+| 타입 | `InferSelectModel<typeof table>` 로 자동 추론 |
+| DB 연결 | `src/lib/db/index.ts` — Transaction pooler (port 6543) |
+| 환경변수 | `DATABASE_URL` (Supabase Connection String) |
+
+### supabase/schema.sql 제거 대상
+
+Phase 9 이전에 수동 SQL로 관리되던 `supabase/schema.sql`은 Drizzle 스키마로 대체되어 **제거 대상**이다.
+
+### updated_at 트리거 처리 방침
+
+`supabase/schema.sql`에 정의되어 있던 `updated_at` 자동 갱신 DB 트리거는 Drizzle 스키마에 포함하지 않는다.
+
+**이유:** `upsertProfile` 쿼리([src/lib/db/queries/profiles.ts](../src/lib/db/queries/profiles.ts))에서 `updated_at: new Date().toISOString()`을 직접 설정하므로 애플리케이션 레벨에서 처리 가능. DB 트리거 의존성을 줄여 Drizzle 스키마가 단일 진실 공급원이 되도록 유지한다.
+
+---
+
 ## 테이블 정의
 
 ### profiles (신체 정보)

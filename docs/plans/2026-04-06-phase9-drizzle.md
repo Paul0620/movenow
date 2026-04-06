@@ -278,6 +278,14 @@ pnpm add -D dotenv
 rm -rf src/lib/supabase
 ```
 
+**`supabase/schema.sql` 삭제** (Drizzle 스키마로 대체):
+```bash
+rm -rf supabase/
+```
+
+> `updated_at` 자동 갱신 트리거는 DB에서 제거하고 애플리케이션 레벨(`upsertProfile`)에서 처리.
+> 상세 방침: `docs/database.md` 참고
+
 ---
 
 ## 완료 후 예상 폴더 구조
@@ -308,6 +316,7 @@ drizzle/                          ← drizzle-kit 생성 마이그레이션
 - [ ] `drizzle-orm` dependencies로 이동 확인
 - [ ] `dotenv` devDependencies 설치 확인
 - [ ] `src/lib/supabase/` 폴더 완전 삭제 확인
+- [ ] `supabase/schema.sql` 및 `supabase/` 폴더 삭제 확인
 - [ ] `pnpm db:push` 로 Supabase DB 테이블 생성 완료
 - [ ] mock 모드 정상 동작 (`DATABASE_URL` 없을 때)
 - [ ] 모든 페이지 정상 동작 (Dashboard, Workout, Diet, Profile, Analysis)
