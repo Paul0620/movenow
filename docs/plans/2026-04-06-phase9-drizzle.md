@@ -1,7 +1,7 @@
 # Phase 9 — Drizzle ORM 도입
 
 > 날짜: 2026-04-06
-> 상태: 진행 중
+> 상태: 완료 (DB push 제외 — Supabase 연결 시 실행)
 
 ## 목표
 
@@ -313,14 +313,14 @@ drizzle/                          ← drizzle-kit 생성 마이그레이션
 
 ## 완료 조건
 
-- [ ] `drizzle-orm` dependencies로 이동 확인
-- [ ] `dotenv` devDependencies 설치 확인
-- [ ] `src/lib/supabase/` 폴더 완전 삭제 확인
-- [ ] `supabase/schema.sql` 및 `supabase/` 폴더 삭제 확인
-- [ ] `pnpm db:push` 로 Supabase DB 테이블 생성 완료
-- [ ] mock 모드 정상 동작 (`DATABASE_URL` 없을 때)
-- [ ] 모든 페이지 정상 동작 (Dashboard, Workout, Diet, Profile, Analysis)
-- [ ] `@supabase/ssr`, `@supabase/supabase-js` 패키지 제거 확인
-- [ ] `pnpm tsc --noEmit` 통과
-- [ ] `pnpm lint` 통과
-- [ ] `pnpm dev` 정상 실행
+- [x] `drizzle-orm` dependencies로 이동 확인
+- [x] `dotenv` devDependencies 설치 확인
+- [x] `src/lib/supabase/` 폴더 완전 삭제 확인
+- [x] `supabase/schema.sql` 및 `supabase/` 폴더 삭제 확인
+- [ ] `pnpm db:push` 로 Supabase DB 테이블 생성 완료 (Supabase 연결 시 실행)
+- [x] mock 모드 정상 동작 (`DATABASE_URL` 없을 때)
+- [x] 모든 페이지 정상 동작 (Dashboard, Workout, Diet, Profile, Analysis)
+- [x] `@supabase/ssr`, `@supabase/supabase-js` 패키지 제거 확인
+- [x] `pnpm tsc --noEmit` 통과
+- [x] `pnpm lint` 통과
+- [x] `pnpm dev` 정상 실행
