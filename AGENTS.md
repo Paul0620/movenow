@@ -26,13 +26,19 @@ Phase N 리뷰해줘
 
 ## 참조 문서
 
-| 문서                   | 확인 시점             |
-| ---------------------- | --------------------- |
-| `docs/roles.md`        | 매 작업 시작 전       |
-| `docs/architecture.md` | 매 작업 시작 전       |
-| `docs/database.md`     | DB 작업 시            |
-| `docs/api.md`          | 외부 API 연동 시      |
-| `docs/conventions.md`  | 파일 생성 / 네이밍 시 |
+| 문서                              | 확인 시점                        |
+| --------------------------------- | -------------------------------- |
+| `docs/roles.md`                   | 매 작업 시작 전                  |
+| `docs/architecture.md`            | 매 작업 시작 전                  |
+| `docs/conventions.md`             | 매 작업 시작 전 (코드 품질 규칙) |
+| `docs/database.md`                | DB 작업 시                       |
+| `docs/api.md`                     | 외부 API 연동 시                 |
+| `.claude/skills/nextjs-app-router.md` | 페이지 / 레이아웃 작업 시    |
+| `.claude/skills/server-actions.md`    | Server Action 작업 시        |
+| `.claude/skills/drizzle-orm.md`       | DB 쿼리 작업 시              |
+| `.claude/skills/react-components.md`  | 컴포넌트 작업 시             |
+| `.claude/skills/typescript-strict.md` | 모든 TypeScript 파일 작성 시 |
+| `.claude/skills/styling.md`           | Tailwind / shadcn 작업 시    |
 
 ## 기술 스택
 

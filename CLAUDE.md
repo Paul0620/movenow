@@ -59,6 +59,35 @@ codex
 
 → 상세 규칙: `.claude/skills/code-quality.md`
 
+## 스킬 규칙
+
+### 계획 수립 시 의무 사항
+
+모든 계획 파일의 `## 주의사항`에 아래를 **반드시** 포함한다:
+
+**항상 포함 (모든 Phase)**
+```
+- `/code-quality` 규칙 준수 — any 타입, 타입 단언 남용, 우회 코드, 더티 로직 금지
+- `/typescript-strict` 규칙 준수 — InferSelectModel 추론, Zod v4 패턴, unknown 에러 처리
+```
+
+**작업 범위에 따라 추가**
+
+| 작업 포함 시 | 추가할 스킬 |
+| ------------ | ----------- |
+| 페이지 / 레이아웃 | `/nextjs-app-router` |
+| Server Action | `/server-actions` |
+| DB 쿼리 / 스키마 | `/drizzle-orm` |
+| 컴포넌트 | `/react-components` |
+| UI / 스타일 | `/styling` |
+
+### 리뷰 시 의무 사항
+
+Phase 리뷰 시 해당 Phase에 명시된 모든 스킬의 체크리스트를 통과해야 한다.
+위반 항목이 하나라도 있으면 통과 판정을 내리지 않는다.
+
+→ 스킬 상세: `.claude/skills/` 폴더
+
 ## 현재 상태
 
 🚧 기획 완료 → Phase 1 셋업 대기

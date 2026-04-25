@@ -45,7 +45,7 @@ export default async function Home() {
 
   if (errors.length > 0) {
     return (
-      <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-3 px-4 py-6 pb-28">
+      <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 px-4 py-6 pb-28">
         <div className="grid gap-1">
           <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
           <p className="text-sm text-muted-foreground">

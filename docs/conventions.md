@@ -39,44 +39,49 @@ Prettier + ESLint 병행 사용. 충돌 방지를 위해 `eslint-config-prettier
 | 대상                                 | 확인 시점                    |
 | ------------------------------------ | ---------------------------- |
 | Next.js (App Router, Server Actions) | 페이지 / 서버 로직 작성 전   |
-| Supabase                             | DB 쿼리 / 클라이언트 설정 전 |
+| Drizzle ORM                          | DB 쿼리 / 스키마 작성 전     |
 | shadcn/ui                            | 컴포넌트 추가 / 사용 전      |
 | Zod                                  | 스키마 정의 전               |
 | Recharts                             | 차트 컴포넌트 작성 전        |
-
-**이유**: 버전 업데이트로 API, 패턴, 권장 방식이 바뀔 수 있음. 구버전 코드 작성 방지.
 
 ---
 
 ## 네이밍 규칙
 
-| 대상              | 규칙                      | 예시                       |
-| ----------------- | ------------------------- | -------------------------- |
-| 컴포넌트 파일     | PascalCase                | `WorkoutCard.tsx`          |
-| 유틸 / 훅 파일    | camelCase                 | `useWorkoutLog.ts`         |
-| 타입 / 인터페이스 | PascalCase                | `WorkoutLog`, `DietEntry`  |
-| DB 컬럼           | snake_case                | `calories_burned`          |
-| 환경변수          | UPPER_SNAKE_CASE          | `NEXT_PUBLIC_SUPABASE_URL` |
-| Server Action     | camelCase + Action suffix | `createWorkoutAction`      |
+| 대상              | 규칙                      | 예시                        |
+| ----------------- | ------------------------- | --------------------------- |
+| 컴포넌트 파일     | PascalCase                | `WorkoutCard.tsx`           |
+| 유틸 / 훅 파일    | camelCase                 | `useWorkoutLog.ts`          |
+| 타입 / 인터페이스 | PascalCase                | `WorkoutLog`, `DietEntry`   |
+| DB 컬럼           | snake_case                | `calories_burned`           |
+| 환경변수          | UPPER_SNAKE_CASE          | `DATABASE_URL`              |
+| Server Action     | camelCase + Action suffix | `createWorkoutAction`       |
 
 ---
 
 ## 파일 배치 원칙
 
-- 컴포넌트: `src/components/`
-- 페이지별 컴포넌트: `src/components/{페이지명}/`
-- 공통 컴포넌트: `src/components/ui/` (shadcn/ui 포함)
-- 계산 로직: `src/lib/calculations/`
-- Supabase 쿼리: `src/lib/supabase/`
-- 타입 정의: `src/types/`
+| 종류 | 위치 |
+| ---- | ---- |
+| 페이지 | `src/app/[route]/page.tsx` |
+| 레이아웃 | `src/app/layout.tsx` |
+| 페이지 전용 컴포넌트 | `src/components/[route]/` |
+| 공통 컴포넌트 | `src/components/` |
+| shadcn UI | `src/components/ui/` |
+| Server Action | `src/lib/actions/[entity].ts` |
+| DB 스키마 | `src/lib/db/schema.ts` |
+| DB 연결 | `src/lib/db/index.ts` |
+| DB 쿼리 | `src/lib/db/queries/[entity].ts` |
+| 계산 로직 | `src/lib/calculations/` |
+| 유틸 함수 | `src/lib/utils.ts` |
+| Mock 데이터 | `src/lib/mock/data.ts` |
+| 타입 정의 | `src/types/index.ts` |
 
 ---
 
 ## 그룹화 규칙
 
 > 같은 유형의 파일이 **3개 이상** 모이면 하위 폴더로 그룹화한다.
-
-### 적용 예시
 
 ```
 # Before (3개 누적 시점)
@@ -93,38 +98,56 @@ src/components/
     └── WorkoutList.tsx
 ```
 
-```
-# docs/ 예시
-docs/
-├── api-workout.md
-├── api-diet.md
-└── api-nutrition.md
-→ docs/api/ 폴더로 통합
-```
-
-### 그룹화 기준 패턴
-
-| 파일 패턴                    | 그룹 폴더             |
-| ---------------------------- | --------------------- |
-| `Workout*.tsx` 3개+          | `components/workout/` |
-| `Diet*.tsx` 3개+             | `components/diet/`    |
-| `use*.ts` 3개+ (같은 도메인) | `hooks/{도메인}/`     |
-| `*Action.ts` 3개+            | `actions/`            |
-| `api-*.md` 3개+              | `docs/api/`           |
-
 ---
 
 ## 컴포넌트 작성 원칙
 
-- Server Component 우선, 클라이언트 상태 필요 시에만 `'use client'`
-- Props 타입은 인라인 대신 별도 `type` 정의
-- shadcn/ui 컴포넌트를 먼저 활용, 커스텀은 최소화
+- Server Component 우선, 훅/이벤트 필요 시에만 `'use client'` 추가
+- Props 타입은 `type 컴포넌트명Props` 형식으로 정의 (`interface` 금지)
+- shadcn/ui 컴포넌트를 먼저 활용, 커스텀은 `className` prop으로만
+- 컴포넌트 150줄 초과 시 반드시 분리
+- 라벨 맵 상수는 컴포넌트 함수 외부(모듈 수준)에 정의
+
+---
+
+## 코드 품질 원칙
+
+- `any` 타입 금지 — `unknown` + 타입 가드로 대체
+- 타입 단언(`as`) 금지 — Zod `safeParse` 결과 활용
+- `catch` 블록 에러는 `toErrorMessage(error: unknown)` 헬퍼로 처리
+- 타입은 `InferSelectModel`로 스키마에서 추론. 수동 타입 정의 금지
+- `enum` 금지 — 리터럴 유니온 타입으로 대체
+- `console.log` 커밋 금지
+
+---
+
+## Server Actions 원칙
+
+- 파일 위치: `src/lib/actions/[entity].ts`
+- 파일 최상단에 `'use server'` 선언
+- create/update 시그니처: `(prevState: State, formData: FormData): Promise<State>`
+- 모든 FormData 입력값은 Zod `safeParse`로 검증 (`parse()` 금지)
+- 반환 타입: `{ error: string | null; success: boolean; errors: FieldErrors }`
+- 처리 순서: Zod 검증 → 의존 데이터 조회 → DB 쓰기 → revalidatePath → 성공 반환
+- `revalidatePath`는 DB 쓰기 성공 후에만 호출
+- `redirect()` 사용 금지
+
+---
+
+## DB 쿼리 원칙
+
+- DB 접근은 `getDb()`를 통해서만 (`src/lib/db/index.ts`)
+- 스키마는 `src/lib/db/schema.ts` 한 파일에만 정의
+- 쿼리 함수 반환 타입: 단건 `{ data: T | null; error }`, 목록 `{ data: T[]; error }`, 삭제 `{ error }`
+- mock 분기(`if (isMockMode)`)는 함수 최상단 한 줄로만
+- 모든 쿼리 파일 최상단에 `import 'server-only'`
+- 스키마 수정 시 `pnpm db:push` 실행
 
 ---
 
 ## 계획 파일 규칙 (docs/plans/)
 
-파일명: `YYYY-MM-DD-title.md`
+파일명: `YYYY-MM-DD-phase[N]-[title].md`
 
 ### 템플릿
 
@@ -144,7 +167,12 @@ docs/
 
 - `use context7`으로 최신 stable 문서 확인 후 작성 (beta / rc 제외)
 - `/code-quality` 규칙 준수 — any 타입, 타입 단언 남용, 우회 코드, 더티 로직 금지
-- 작업 전 알아야 할 내용
+- `/typescript-strict` 규칙 준수 — InferSelectModel 추론, Zod v4 패턴, unknown 에러 처리
+- (페이지/컴포넌트 작업 시) `/nextjs-app-router` 규칙 준수 — Server Component 기본, Promise.all 병렬 페칭
+- (Server Action 작업 시) `/server-actions` 규칙 준수 — safeParse, flattenError, revalidatePath 순서
+- (DB 쿼리 작업 시) `/drizzle-orm` 규칙 준수 — getDb(), { data, error } 반환, mock 분기 최상단
+- (컴포넌트 작업 시) `/react-components` 규칙 준수 — useActionState from 'react', Props type, 라벨 맵 모듈 수준
+- (스타일 작업 시) `/styling` 규칙 준수 — shadcn 토큰, 인라인 스타일 금지, 표준 wrapper
 
 ---
 
@@ -173,11 +201,3 @@ docs/
 **완료 조건을 모두 통과해야만 상태를 `완료`로 변경한다.**
 
 파일은 삭제하지 않는다 — 히스토리로 영구 보존.
-
----
-
-## Server Actions 원칙
-
-- 파일명: `src/lib/actions/{도메인}.ts`
-- 반환 타입: `{ data, error }` 형태로 통일
-- Zod로 입력값 검증 후 Supabase 호출

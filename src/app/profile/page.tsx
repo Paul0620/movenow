@@ -5,7 +5,7 @@ export default async function ProfilePage() {
   const { data: profile, error } = await getProfile()
 
   return (
-    <section className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 px-4 py-6 pb-28">
+    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 px-4 py-6 pb-28">
       <div className="grid gap-1">
         <h1 className="text-2xl font-semibold tracking-tight">프로필</h1>
         <p className="text-sm text-muted-foreground">
@@ -15,6 +15,6 @@ export default async function ProfilePage() {
 
       {error ? <p className="text-sm text-destructive">{error}</p> : null}
       <ProfileForm profile={profile} />
-    </section>
+    </main>
   )
 }
