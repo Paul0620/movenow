@@ -42,22 +42,23 @@ export function ProteinChart({ data, proteinGoal, period }: Props) {
         <div className={period === 'month' ? 'h-72' : 'h-64'}>
           <ResponsiveContainer width="100%" height="100%">
             <ComposedChart data={data} margin={{ top: 12, right: 12, left: -12, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
+              <CartesianGrid stroke="var(--border)" strokeDasharray="3 3" vertical={false} />
               <XAxis
                 dataKey="date"
+                stroke="var(--muted-foreground)"
                 tickFormatter={formatDateLabel}
                 minTickGap={period === 'month' ? 20 : 8}
               />
-              <YAxis />
+              <YAxis stroke="var(--muted-foreground)" />
               <Tooltip labelFormatter={formatTooltipLabel} formatter={formatTooltipValue} />
               <ReferenceLine
                 y={proteinGoal}
-                stroke="#f97316"
+                stroke="var(--chart-3)"
                 strokeDasharray="6 6"
                 ifOverflow="extendDomain"
                 label={{ value: '목표', position: 'insideTopRight' }}
               />
-              <Bar dataKey="totalProteinG" fill="#22c55e" radius={[8, 8, 0, 0]} />
+              <Bar dataKey="totalProteinG" fill="var(--chart-1)" radius={[8, 8, 0, 0]} />
             </ComposedChart>
           </ResponsiveContainer>
         </div>

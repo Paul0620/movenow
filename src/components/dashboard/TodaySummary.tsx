@@ -50,7 +50,7 @@ export function TodaySummary({
             <CardTitle className="text-sm text-muted-foreground">{item.title}</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-1">
-            <p className="text-2xl font-semibold tracking-tight">{item.value}</p>
+            <p className="text-2xl font-bold tracking-tight">{item.value}</p>
             <p className="text-sm text-muted-foreground">{item.hint}</p>
           </CardContent>
         </Card>

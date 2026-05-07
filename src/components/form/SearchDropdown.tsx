@@ -24,7 +24,7 @@ export function SearchDropdown<T>({
   return (
     <div
       ref={dropdownRef}
-      className="absolute z-20 mt-2 w-full rounded-lg border border-border bg-background p-2 shadow-lg"
+      className="shadow-spotify-dialog absolute z-20 mt-2 w-full rounded-lg border border-border bg-popover p-2"
     >
       <div className="grid gap-2">
         {results.map((item) => (

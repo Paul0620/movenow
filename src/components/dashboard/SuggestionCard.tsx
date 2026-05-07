@@ -25,7 +25,7 @@ export function SuggestionCard({ suggestions }: SuggestionCardProps) {
       </CardHeader>
       <CardContent>
         {suggestions.length === 0 ? (
-          <div className="rounded-lg border border-dashed border-emerald-300 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+          <div className="rounded-lg border border-primary/40 bg-primary/10 px-4 py-3 text-sm font-bold text-primary">
             오늘 목표를 모두 달성했어요!
           </div>
         ) : (

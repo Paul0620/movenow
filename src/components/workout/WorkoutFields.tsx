@@ -43,7 +43,7 @@ export function WorkoutFields({ errors }: WorkoutFieldsProps) {
           id="notes"
           name="notes"
           maxLength={500}
-          className="min-h-24 rounded-lg border border-input bg-transparent px-3 py-2 text-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+          className="min-h-24 rounded-2xl border border-input bg-input px-3 py-2 text-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
         />
         <FieldError message={errors.notes} />
       </div>

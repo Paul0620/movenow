@@ -10,7 +10,7 @@ type WorkoutListProps = {
 export function WorkoutList({ logs }: WorkoutListProps) {
   if (logs.length === 0) {
     return (
-      <div className="rounded-xl border border-dashed border-border bg-muted/30 px-4 py-6 text-sm text-muted-foreground">
+      <div className="rounded-lg border border-dashed border-border bg-muted/30 px-4 py-6 text-sm text-muted-foreground">
         오늘 등록된 운동 기록이 없습니다.
       </div>
     )

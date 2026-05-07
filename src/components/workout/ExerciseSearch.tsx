@@ -70,7 +70,7 @@ export function ExerciseSearch({
           <button
             type="button"
             onClick={() => handleSelect(exercise)}
-            className="w-full rounded-md border border-border px-3 py-2 text-left text-sm transition-colors hover:bg-muted"
+            className="w-full rounded-lg border border-border px-3 py-2 text-left text-sm transition-colors hover:bg-muted"
           >
             <span className="block font-medium">{exercise.name}</span>
             <span className="text-xs text-muted-foreground">
@@ -81,7 +81,7 @@ export function ExerciseSearch({
       />
 
       {showEmpty ? (
-        <div className="absolute z-20 mt-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-muted-foreground shadow-lg">
+        <div className="shadow-spotify-dialog absolute z-20 mt-2 w-full rounded-lg border border-border bg-popover px-3 py-2 text-sm text-muted-foreground">
           검색 결과가 없습니다
         </div>
       ) : null}
