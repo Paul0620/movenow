@@ -7,21 +7,21 @@ import { calcCaloriesBurned } from '@/lib/calculations'
 import { getProfile } from '@/lib/db/queries/profiles'
 import { createWorkoutLog, deleteWorkoutLog } from '@/lib/db/queries/workout'
 
-const optionalInt = z.preprocess((value) => {
-  if (value === '' || value === null) return undefined
-  return value
-}, z.coerce.number().int().min(1).optional())
+const optionalInt = z
+  .string()
+  .transform((value) => (value === '' ? undefined : value))
+  .pipe(z.coerce.number<string | undefined>().int().min(1).optional())
 
-const optionalNumber = z.preprocess((value) => {
-  if (value === '' || value === null) return undefined
-  return value
-}, z.coerce.number().min(0).optional())
+const optionalNumber = z
+  .string()
+  .transform((value) => (value === '' ? undefined : value))
+  .pipe(z.coerce.number<string | undefined>().min(0).optional())
 
-const optionalString = z.preprocess((value) => {
-  if (typeof value !== 'string') return undefined
-  const trimmed = value.trim()
-  return trimmed === '' ? undefined : trimmed
-}, z.string().max(500).optional())
+const optionalString = z
+  .string()
+  .trim()
+  .transform((value) => (value === '' ? undefined : value))
+  .pipe(z.string().max(500).optional())
 
 const WorkoutSchema = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),

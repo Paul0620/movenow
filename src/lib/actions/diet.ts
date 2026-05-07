@@ -5,10 +5,10 @@ import { z } from 'zod'
 
 import { createDietLog, deleteDietLog } from '@/lib/db/queries/diet'
 
-const optionalAmount = z.preprocess((value) => {
-  if (value === '' || value === null) return undefined
-  return value
-}, z.coerce.number().min(1).max(5000).optional())
+const optionalAmount = z
+  .string()
+  .transform((value) => (value === '' ? undefined : value))
+  .pipe(z.coerce.number<string | undefined>().min(1).max(5000).optional())
 
 const DietSchema = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
